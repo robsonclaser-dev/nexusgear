@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS GEAR — Games & Eletrônicos</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cyan: #00f0ff;
+  --purple: #b44fff;
+  --pink: #ff2d78;
+  --green: #00ff88;
+  --dark: #070710;
+  --dark2: #0d0d1a;
+  --dark3: #111127;
+  --dark4: #181830;
+  --text: #e0e0ff;
+  --muted: #7070a0;
+  --border: rgba(0,240,255,0.15);
+  --glow-cyan: 0 0 20px rgba(0,240,255,0.4);
+  --glow-purple: 0 0 20px rgba(180,79,255,0.4);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--dark);
+  color:var(--text);
+  font-family:'Exo 2',sans-serif;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* SCANLINE OVERLAY */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.08) 2px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events:none;
+  z-index:9999;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--dark2);}
+::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:3px;}
+
+/* NAVBAR */
+nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(7,7,16,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0 2rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:64px;
+}
+.logo{
+  font-family:'Orbitron',monospace;
+  font-weight:900;
+  font-size:1.4rem;
+  letter-spacing:3px;
+  color:var(--cyan);
+  text-shadow:var(--glow-cyan);
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.logo span{color:var(--purple);}
+.logo-icon{
+  width:32px;height:32px;
+  border:2px solid var(--cyan);
+  border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;
+  box-shadow:var(--glow-cyan);
+}
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:2rem;
+  list-style:none;
+}
+.nav-links a{
+  color:var(--muted);
+  text-decoration:none;
+  font-size:.9rem;
+  font-weight:500;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  transition:.2s;
+  cursor:pointer;
+}
+.nav-links a:hover{color:var(--cyan);}
+.nav-right{display:flex;align-items:center;gap:1rem;}
+.search-box{
+  background:var(--dark3);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:8px 14px;
+  color:var(--text);
+  font-family:'Exo 2',sans-serif;
+  font-size:.85rem;
+  width:220px;
+  outline:none;
+  transition:.3s;
+}
+.search-box:focus{border-color:var(--cyan);box-shadow:var(--glow-cyan);}
+.cart-btn{
+  position:relative;
+  background:transparent;
+  border:1px solid var(--cyan);
+  color:var(--cyan);
+  padding:8px 18px;
+  border-radius:6px;
+  font-family:'Exo 2',sans-serif;
+  font-size:.85rem;
+  font-weight:600;
+  letter-spacing:1px;
+  cursor:pointer;
+  transition:.2s;
+  text-transform:uppercase;
+}
+.cart-btn:hover{background:var(--cyan);color:var(--dark);}
+.cart-count{
+  position:absolute;
+  top:-8px;right:-8px;
+  background:var(--pink);
+  color:#fff;
+  width:20px;height:20px;
+  border-radius:50%;
+  font-size:.7rem;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  min-height:580px;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  padding:4rem 2rem;
+}
+.hero-bg{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 50%, rgba(180,79,255,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 80% at 20% 50%, rgba(0,240,255,0.08) 0%, transparent 50%),
+    var(--dark2);
+}
+.hero-grid{
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(0,240,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,240,255,0.04) 1px, transparent 1px);
+  background-size:50px 50px;
+}
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:600px;
+}
+.hero-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(0,240,255,0.1);
+  border:1px solid rgba(0,240,255,0.3);
+  color:var(--cyan);
+  padding:6px 14px;
+  border-radius:20px;
+  font-size:.8rem;
+  font-weight:600;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:1.5rem;
+}
+.badge-dot{
+  width:8px;height:8px;
+  background:var(--cyan);
+  border-radius:50%;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:1;transform:scale(1);}
+  50%{opacity:.4;transform:scale(1.4);}
+}
+.hero h1{
+  font-family:'Orbitron',monospace;
+  font-weight:900;
+  font-size:3.5rem;
+  line-height:1.1;
+  margin-bottom:1.5rem;
+  text-transform:uppercase;
+}
+.hero h1 .line1{display:block;color:var(--text);}
+.hero h1 .line2{
+  display:block;
+  color:var(--cyan);
+  text-shadow:var(--glow-cyan);
+  position:relative;
+}
+.hero h1 .line2::after{
+  content:attr(data-text);
+  position:absolute;
+  left:2px;top:0;
+  color:var(--purple);
+  opacity:.4;
+  clip-path:polygon(0 30%,100% 30%,100% 50%,0 50%);
+}
+.hero p{
+  color:var(--muted);
+  font-size:1.1rem;
+  line-height:1.7;
+  margin-bottom:2rem;
+  font-weight:300;
+}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-primary{
+  background:var(--cyan);
+  color:var(--dark);
+  border:none;
+  padding:14px 32px;
+  border-radius:6px;
+  font-family:'Exo 2',sans-serif;
+  font-size:1rem;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:.2s;
+  box-shadow:var(--glow-cyan);
+  text-decoration:none;
+  display:inline-block;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(0,240,255,.6);}
+.btn-outline{
+  background:transparent;
+  color:var(--text);
+  border:1px solid rgba(255,255,255,0.2);
+  padding:14px 32px;
+  border-radius:6px;
+  font-family:'Exo 2',sans-serif;
+  font-size:1rem;
+  font-weight:600;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:.2s;
+  text-decoration:none;
+  display:inline-block;
+}
+.btn-outline:hover{border-color:var(--purple);color:var(--purple);}
+.hero-stats{
+  display:flex;
+  gap:3rem;
+  margin-top:3rem;
+}
+.stat{
+  border-left:2px solid var(--cyan);
+  padding-left:1rem;
+}
+.stat-num{
+  font-family:'Orbitron',monospace;
+  font-size:1.5rem;
+  font-weight:700;
+  color:var(--cyan);
+}
+.stat-label{
+  font-size:.75rem;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin-top:2px;
+}
+.hero-visual{
+  position:absolute;
+  right:0;top:0;bottom:0;
+  width:45%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.hex-grid{
+  position:absolute;
+  right:-40px;
+  top:50%;
+  transform:translateY(-50%);
+  width:480px;height:480px;
+  opacity:.4;
+}
+
+/* CATEGORIES */
+.section{padding:4rem 2rem;}
+.section-header{
+  display:flex;
+  align-items:baseline;
+  gap:1rem;
+  margin-bottom:2.5rem;
+}
+.section-title{
+  font-family:'Orbitron',monospace;
+  font-weight:700;
+  font-size:1.5rem;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  color:var(--text);
+}
+.section-line{
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg, var(--border) 0%, transparent 100%);
+}
+.section-tag{
+  color:var(--cyan);
+  font-size:.8rem;
+  font-weight:600;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+.categories{
+  display:grid;
+  grid-template-columns:repeat(6, 1fr);
+  gap:1rem;
+}
+@media(max-width:1000px){.categories{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:600px){.categories{grid-template-columns:repeat(2,1fr);}}
+.cat-card{
+  background:var(--dark3);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:1.5rem 1rem;
+  text-align:center;
+  cursor:pointer;
+  transition:.3s;
+  position:relative;
+  overflow:hidden;
+}
+.cat-card::before{
+  content:'';
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:2px;
+  background:var(--cyan);
+  transform:scaleX(0);
+  transition:.3s;
+}
+.cat-card:hover::before{transform:scaleX(1);}
+.cat-card:hover{
+  border-color:rgba(0,240,255,.4);
+  background:var(--dark4);
+  transform:translateY(-4px);
+  box-shadow:0 8px 30px rgba(0,0,0,.4);
+}
+.cat-card.active{
+  border-color:var(--cyan);
+  background:rgba(0,240,255,0.05);
+}
+.cat-icon{
+  font-size:2.2rem;
+  margin-bottom:.8rem;
+  display:block;
+}
+.cat-name{
+  font-family:'Rajdhani',sans-serif;
+  font-size:1rem;
+  font-weight:600;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+.cat-count{
+  font-size:.75rem;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+/* FEATURED BANNER */
+.featured-banner{
+  margin:0 2rem 3rem;
+  background:linear-gradient(135deg, rgba(180,79,255,0.15) 0%, rgba(0,240,255,0.08) 100%);
+  border:1px solid rgba(180,79,255,0.3);
+  border-radius:16px;
+  padding:2.5rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:relative;
+  overflow:hidden;
+}
+.featured-banner::before{
+  content:'SALE';
+  position:absolute;
+  right:-30px;top:-20px;
+  font-family:'Orbitron',monospace;
+  font-size:8rem;
+  font-weight:900;
+  color:rgba(180,79,255,0.05);
+  letter-spacing:-5px;
+  pointer-events:none;
+}
+.banner-content{}
+.banner-tag{
+  display:inline-block;
+  background:var(--purple);
+  color:#fff;
+  padding:4px 14px;
+  border-radius:4px;
+  font-size:.75rem;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:1rem;
+}
+.banner-title{
+  font-family:'Orbitron',monospace;
+  font-size:2rem;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:.5rem;
+}
+.banner-sub{color:var(--muted);font-size:1rem;}
+.banner-cta{
+  background:var(--purple);
+  color:#fff;
+  border:none;
+  padding:14px 32px;
+  border-radius:6px;
+  font-family:'Exo 2',sans-serif;
+  font-size:1rem;
+  font-weight:700;
+  letter-spacing:1px;
+  cursor:pointer;
+  transition:.2s;
+  white-space:nowrap;
+  box-shadow:var(--glow-purple);
+}
+.banner-cta:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(180,79,255,.6);}
+
+/* PRODUCTS */
+.products-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:2rem;
+  padding:0 2rem;
+}
+.sort-select{
+  background:var(--dark3);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:8px 14px;
+  color:var(--text);
+  font-family:'Exo 2',sans-serif;
+  font-size:.85rem;
+  outline:none;
+  cursor:pointer;
+}
+.products-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1.5rem;
+  padding:0 2rem;
+}
+@media(max-width:1200px){.products-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:900px){.products-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.products-grid{grid-template-columns:1fr;}}
+
+.product-card{
+  background:var(--dark3);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  transition:.3s;
+  position:relative;
+  cursor:pointer;
+}
+.product-card:hover{
+  border-color:rgba(0,240,255,.35);
+  transform:translateY(-6px);
+  box-shadow:0 12px 40px rgba(0,0,0,.5),0 0 20px rgba(0,240,255,0.08);
+}
+.product-badge{
+  position:absolute;
+  top:12px;left:12px;
+  z-index:3;
+  padding:4px 10px;
+  border-radius:4px;
+  font-size:.7rem;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+.badge-new{background:var(--green);color:var(--dark);}
+.badge-hot{background:var(--pink);color:#fff;}
+.badge-sale{background:var(--purple);color:#fff;}
+.badge-off{background:var(--cyan);color:var(--dark);}
+
+.product-img{
+  width:100%;
+  aspect-ratio:1;
+  background:var(--dark2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:5rem;
+  position:relative;
+  overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+.product-img-overlay{
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at center, rgba(0,240,255,0.03) 0%, transparent 70%);
+}
+.product-actions{
+  position:absolute;
+  top:12px;right:12px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  opacity:0;
+  transform:translateX(10px);
+  transition:.3s;
+}
+.product-card:hover .product-actions{opacity:1;transform:translateX(0);}
+.action-btn{
+  width:36px;height:36px;
+  background:rgba(13,13,26,0.9);
+  border:1px solid var(--border);
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:.2s;
+  font-size:1rem;
+  color:var(--text);
+}
+.action-btn:hover{background:var(--cyan);color:var(--dark);border-color:var(--cyan);}
+.product-info{padding:1rem 1.2rem 1.2rem;}
+.product-brand{
+  font-size:.72rem;
+  color:var(--cyan);
+  text-transform:uppercase;
+  letter-spacing:2px;
+  margin-bottom:4px;
+  font-weight:600;
+}
+.product-name{
+  font-family:'Rajdhani',sans-serif;
+  font-size:1.05rem;
+  font-weight:600;
+  color:var(--text);
+  margin-bottom:8px;
+  line-height:1.3;
+}
+.product-specs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-bottom:12px;
+}
+.spec-tag{
+  background:var(--dark4);
+  border:1px solid rgba(255,255,255,0.06);
+  color:var(--muted);
+  padding:2px 8px;
+  border-radius:4px;
+  font-size:.7rem;
+  font-weight:500;
+}
+.product-rating{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-bottom:12px;
+}
+.stars{color:#f5a623;font-size:.85rem;letter-spacing:1px;}
+.rating-count{color:var(--muted);font-size:.75rem;}
+.product-pricing{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+.price-block{}
+.price-original{
+  font-size:.8rem;
+  color:var(--muted);
+  text-decoration:line-through;
+}
+.price-current{
+  font-family:'Orbitron',monospace;
+  font-size:1.2rem;
+  font-weight:700;
+  color:var(--cyan);
+}
+.add-cart-btn{
+  background:transparent;
+  border:1px solid var(--cyan);
+  color:var(--cyan);
+  padding:8px 16px;
+  border-radius:6px;
+  font-family:'Exo 2',sans-serif;
+  font-size:.8rem;
+  font-weight:600;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:.2s;
+  white-space:nowrap;
+}
+.add-cart-btn:hover{background:var(--cyan);color:var(--dark);}
+.add-cart-btn.added{background:var(--green);border-color:var(--green);color:var(--dark);}
+
+/* CART SIDEBAR */
+.cart-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  z-index:200;
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
+}
+.cart-overlay.open{opacity:1;pointer-events:all;}
+.cart-sidebar{
+  position:fixed;
+  top:0;right:-420px;
+  width:420px;
+  height:100vh;
+  background:var(--dark2);
+  border-left:1px solid var(--border);
+  z-index:201;
+  display:flex;
+  flex-direction:column;
+  transition:.4s cubic-bezier(.4,0,.2,1);
+  overflow:hidden;
+}
+.cart-sidebar.open{right:0;}
+.cart-header{
+  padding:1.5rem;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.cart-title{
+  font-family:'Orbitron',monospace;
+  font-size:1rem;
+  font-weight:700;
+  color:var(--cyan);
+  letter-spacing:2px;
+}
+.cart-close{
+  background:none;
+  border:1px solid var(--border);
+  color:var(--muted);
+  width:36px;height:36px;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:1.2rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:.2s;
+}
+.cart-close:hover{border-color:var(--pink);color:var(--pink);}
+.cart-items{
+  flex:1;
+  overflow-y:auto;
+  padding:1rem 1.5rem;
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+}
+.cart-empty{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:var(--muted);
+  gap:1rem;
+  font-size:1rem;
+}
+.cart-empty-icon{font-size:4rem;opacity:.3;}
+.cart-item{
+  background:var(--dark3);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:1rem;
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.cart-item-img{
+  width:60px;height:60px;
+  background:var(--dark4);
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;
+  flex-shrink:0;
+}
+.cart-item-info{flex:1;}
+.cart-item-name{
+  font-family:'Rajdhani',sans-serif;
+  font-size:.95rem;
+  font-weight:600;
+  margin-bottom:4px;
+}
+.cart-item-price{
+  font-family:'Orbitron',monospace;
+  font-size:.9rem;
+  color:var(--cyan);
+}
+.cart-item-qty{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.qty-btn{
+  width:26px;height:26px;
+  background:var(--dark4);
+  border:1px solid var(--border);
+  color:var(--text);
+  border-radius:4px;
+  cursor:pointer;
+  font-size:.9rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:.2s;
+}
+.qty-btn:hover{background:var(--cyan);color:var(--dark);border-color:var(--cyan);}
+.qty-num{
+  font-family:'Orbitron',monospace;
+  font-size:.85rem;
+  min-width:20px;
+  text-align:center;
+}
+.remove-item{
+  background:none;
+  border:none;
+  color:var(--muted);
+  cursor:pointer;
+  font-size:1rem;
+  transition:.2s;
+  padding:4px;
+}
+.remove-item:hover{color:var(--pink);}
+.cart-footer{
+  padding:1.5rem;
+  border-top:1px solid var(--border);
+}
+.cart-summary{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:1rem;
+  font-size:.9rem;
+}
+.cart-total-label{color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-size:.8rem;}
+.cart-total{
+  font-family:'Orbitron',monospace;
+  font-size:1.4rem;
+  font-weight:700;
+  color:var(--cyan);
+}
+.checkout-btn{
+  width:100%;
+  background:linear-gradient(135deg,var(--cyan) 0%,var(--purple) 100%);
+  border:none;
+  color:var(--dark);
+  padding:16px;
+  border-radius:8px;
+  font-family:'Exo 2',sans-serif;
+  font-size:1rem;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:.2s;
+  font-weight:800;
+}
+.checkout-btn:hover{opacity:.9;transform:translateY(-1px);}
+
+/* BRANDS */
+.brands{
+  padding:3rem 2rem;
+  border-top:1px solid var(--border);
+  background:var(--dark2);
+}
+.brands-track{
+  display:flex;
+  align-items:center;
+  gap:3rem;
+  overflow:hidden;
+}
+.brand-item{
+  flex-shrink:0;
+  font-family:'Orbitron',monospace;
+  font-size:.9rem;
+  font-weight:700;
+  color:var(--muted);
+  letter-spacing:2px;
+  transition:.2s;
+  cursor:default;
+}
+.brand-item:hover{color:var(--cyan);}
+
+/* NEWSLETTER */
+.newsletter{
+  margin:2rem;
+  background:var(--dark2);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:3rem;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.newsletter::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 80% 80% at 50% 50%,rgba(0,240,255,0.05) 0%,transparent 60%);
+}
+.newsletter h2{
+  font-family:'Orbitron',monospace;
+  font-size:1.5rem;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:.5rem;
+  position:relative;
+}
+.newsletter p{color:var(--muted);margin-bottom:2rem;position:relative;}
+.newsletter-form{
+  display:flex;
+  gap:12px;
+  max-width:500px;
+  margin:0 auto;
+  position:relative;
+}
+.newsletter-input{
+  flex:1;
+  background:var(--dark3);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:14px 18px;
+  color:var(--text);
+  font-family:'Exo 2',sans-serif;
+  font-size:.95rem;
+  outline:none;
+  transition:.3s;
+}
+.newsletter-input:focus{border-color:var(--cyan);}
+.newsletter-btn{
+  background:var(--cyan);
+  color:var(--dark);
+  border:none;
+  padding:14px 28px;
+  border-radius:6px;
+  font-family:'Exo 2',sans-serif;
+  font-weight:700;
+  font-size:.9rem;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:.2s;
+  white-space:nowrap;
+}
+.newsletter-btn:hover{box-shadow:var(--glow-cyan);}
+
+/* FOOTER */
+footer{
+  background:var(--dark2);
+  border-top:1px solid var(--border);
+  padding:3rem 2rem 2rem;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:3rem;
+  margin-bottom:3rem;
+}
+@media(max-width:800px){.footer-grid{grid-template-columns:1fr 1fr;}}
+.footer-brand .logo{margin-bottom:1rem;display:inline-flex;}
+.footer-desc{color:var(--muted);font-size:.9rem;line-height:1.7;margin-bottom:1.5rem;}
+.footer-social{display:flex;gap:10px;}
+.social-btn{
+  width:38px;height:38px;
+  background:var(--dark3);
+  border:1px solid var(--border);
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);
+  cursor:pointer;
+  transition:.2s;
+  font-size:1.1rem;
+  text-decoration:none;
+}
+.social-btn:hover{border-color:var(--cyan);color:var(--cyan);}
+.footer-col h4{
+  font-family:'Rajdhani',sans-serif;
+  font-size:1rem;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--text);
+  margin-bottom:1rem;
+}
+.footer-col ul{list-style:none;}
+.footer-col ul li{
+  margin-bottom:8px;
+}
+.footer-col ul li a{
+  color:var(--muted);
+  text-decoration:none;
+  font-size:.9rem;
+  transition:.2s;
+  cursor:pointer;
+}
+.footer-col ul li a:hover{color:var(--cyan);}
+.footer-bottom{
+  border-top:1px solid var(--border);
+  padding-top:1.5rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:1rem;
+}
+.footer-copy{color:var(--muted);font-size:.8rem;}
+.footer-pay{display:flex;gap:8px;align-items:center;}
+.pay-badge{
+  background:var(--dark3);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:4px 10px;
+  font-size:.7rem;
+  font-weight:600;
+  color:var(--muted);
+  letter-spacing:1px;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  bottom:2rem;right:2rem;
+  background:var(--dark3);
+  border:1px solid var(--cyan);
+  border-radius:10px;
+  padding:1rem 1.5rem;
+  color:var(--text);
+  font-size:.9rem;
+  z-index:500;
+  transform:translateY(100px);
+  opacity:0;
+  transition:.3s;
+  box-shadow:var(--glow-cyan);
+  max-width:300px;
+}
+.toast.show{transform:translateY(0);opacity:1;}
+
+/* LOAD MORE */
+.load-more-wrap{
+  text-align:center;
+  padding:3rem 2rem;
+}
+
+/* SEARCH FILTER */
+.search-filter{
+  padding:0 2rem 1rem;
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+.filter-count{
+  color:var(--muted);
+  font-size:.85rem;
+}
+.active-filters{display:flex;gap:.5rem;flex-wrap:wrap;}
+.filter-pill{
+  background:rgba(0,240,255,0.1);
+  border:1px solid rgba(0,240,255,.3);
+  color:var(--cyan);
+  padding:4px 12px;
+  border-radius:20px;
+  font-size:.75rem;
+  font-weight:600;
+}
+
+/* PROMO TICKER */
+.ticker{
+  background:var(--cyan);
+  color:var(--dark);
+  padding:8px 0;
+  overflow:hidden;
+  white-space:nowrap;
+}
+.ticker-content{
+  display:inline-block;
+  animation:ticker 30s linear infinite;
+  font-family:'Rajdhani',sans-serif;
+  font-weight:700;
+  font-size:.9rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+@keyframes ticker{
+  0%{transform:translateX(100vw);}
+  100%{transform:translateX(-100%);}
+}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker">
+  <span class="ticker-content">
+    🎮 FRETE GRÁTIS acima de R$299 &nbsp;⚡&nbsp; PARCELE em até 12x SEM JUROS &nbsp;🔥&nbsp; PROCESSADOR i9-14900K em OFERTA &nbsp;⚡&nbsp; HEADSET GAMER com 40% OFF &nbsp;🎮&nbsp; MONITOR 4K 144Hz → preço imperdível &nbsp;⚡&nbsp; RTX 4090 disponível → GARANTA já &nbsp;🔥&nbsp; TECLADO MECÂNICO RGB com desconto especial &nbsp;
+  </span>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <a class="logo" href="#">
+    <div class="logo-icon">⬡</div>
+    NEXUS<span>GEAR</span>
+  </a>
+  <ul class="nav-links">
+    <li><a onclick="filterCat('todos')">Todos</a></li>
+    <li><a onclick="filterCat('perifericos')">Periféricos</a></li>
+    <li><a onclick="filterCat('pc')">PCs</a></li>
+    <li><a onclick="filterCat('consoles')">Consoles</a></li>
+    <li><a onclick="filterCat('monitores')">Monitores</a></li>
+    <li><a onclick="filterCat('cadeiras')">Cadeiras</a></li>
+  </ul>
+  <div class="nav-right">
+    <input class="search-box" placeholder="🔍 Buscar produtos..." oninput="searchProducts(this.value)" id="searchInput">
+    <button class="cart-btn" onclick="toggleCart()">
+      🛒 Carrinho
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="badge-dot"></div>
+      Loja Oficial · Envio Nacional
+    </div>
+    <h1>
+      <span class="line1">O PRÓXIMO NÍVEL</span>
+      <span class="line2" data-text="COMEÇA AQUI">COMEÇA AQUI</span>
+    </h1>
+    <p>Setup gamer completo, periféricos de elite e os melhores PCs. Tudo em um lugar — com preços que fazem sentido.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('produtos').scrollIntoView({behavior:'smooth'})">VER PRODUTOS</button>
+      <button class="btn-outline">MONTE SEU PC →</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">8.500+</div>
+        <div class="stat-label">Produtos</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">32K</div>
+        <div class="stat-label">Clientes</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4.9★</div>
+        <div class="stat-label">Avaliação</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <svg class="hex-grid" viewBox="0 0 480 480" fill="none">
+      <defs>
+        <pattern id="hex" x="0" y="0" width="60" height="69" patternUnits="userSpaceOnUse">
+          <polygon points="30,1 58,16 58,53 30,68 2,53 2,16" fill="none" stroke="#00f0ff" stroke-width="0.5" opacity="0.6"/>
+        </pattern>
+      </defs>
+      <rect width="480" height="480" fill="url(#hex)"/>
+      <polygon points="240,120 300,155 300,225 240,260 180,225 180,155" fill="rgba(0,240,255,0.05)" stroke="#00f0ff" stroke-width="1.5"/>
+      <polygon points="240,140 290,168 290,224 240,252 190,224 190,168" fill="rgba(180,79,255,0.06)" stroke="#b44fff" stroke-width="1"/>
+      <text x="240" y="205" fill="#00f0ff" font-family="Orbitron,monospace" font-size="40" font-weight="900" text-anchor="middle" opacity="0.8">⚡</text>
+    </svg>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section" style="padding-bottom:2rem;">
+  <div class="section-header">
+    <span class="section-tag">// CATEGORIAS</span>
+    <span class="section-title">EXPLORE</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="categories">
+    <div class="cat-card active" onclick="filterCat('todos')">
+      <span class="cat-icon">🎮</span>
+      <div class="cat-name">Todos</div>
+      <div class="cat-count">48 produtos</div>
+    </div>
+    <div class="cat-card" onclick="filterCat('perifericos')">
+      <span class="cat-icon">⌨️</span>
+      <div class="cat-name">Periféricos</div>
+      <div class="cat-count">18 produtos</div>
+    </div>
+    <div class="cat-card" onclick="filterCat('pc')">
+      <span class="cat-icon">🖥️</span>
+      <div class="cat-name">PCs</div>
+      <div class="cat-count">9 produtos</div>
+    </div>
+    <div class="cat-card" onclick="filterCat('consoles')">
+      <span class="cat-icon">🕹️</span>
+      <div class="cat-name">Consoles</div>
+      <div class="cat-count">6 produtos</div>
+    </div>
+    <div class="cat-card" onclick="filterCat('monitores')">
+      <span class="cat-icon">🔲</span>
+      <div class="cat-name">Monitores</div>
+      <div class="cat-count">8 produtos</div>
+    </div>
+    <div class="cat-card" onclick="filterCat('cadeiras')">
+      <span class="cat-icon">🪑</span>
+      <div class="cat-name">Cadeiras</div>
+      <div class="cat-count">7 produtos</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED BANNER -->
+<div class="featured-banner">
+  <div class="banner-content">
+    <div class="banner-tag">⚡ Oferta Relâmpago · Acaba em breve</div>
+    <div class="banner-title">RTX 4090 — King of Frames</div>
+    <div class="banner-sub">A GPU mais poderosa do mercado. 4K, Ray Tracing extremo, DLSS 3.</div>
+  </div>
+  <button class="banner-cta" onclick="addToCartById('rtx4090')">VER OFERTA → R$ 9.899</button>
+</div>
+
+<!-- PRODUCTS -->
+<section id="produtos" class="section" style="padding-top:1rem;">
+  <div class="products-header">
+    <div class="section-header" style="margin-bottom:0;flex:1;">
+      <span class="section-tag">// PRODUTOS</span>
+      <span class="section-title" id="currentCatTitle">TODOS OS PRODUTOS</span>
+      <div class="section-line"></div>
+    </div>
+    <select class="sort-select" onchange="sortProducts(this.value)">
+      <option value="default">Ordem padrão</option>
+      <option value="priceAsc">Menor preço</option>
+      <option value="priceDesc">Maior preço</option>
+      <option value="rating">Melhor avaliação</option>
+      <option value="name">Nome A-Z</option>
+    </select>
+  </div>
+
+  <div class="search-filter">
+    <span class="filter-count" id="filterCount">Exibindo 12 de 12 produtos</span>
+    <div class="active-filters" id="activeFilters"></div>
+  </div>
+
+  <div class="products-grid" id="productsGrid"></div>
+
+  <div class="load-more-wrap">
+    <button class="btn-outline" id="loadMoreBtn" onclick="loadMore()">CARREGAR MAIS PRODUTOS</button>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<div class="brands">
+  <div class="brands-track">
+    <span class="brand-item">RAZER</span>
+    <span class="brand-item">NVIDIA</span>
+    <span class="brand-item">AMD</span>
+    <span class="brand-item">LOGITECH</span>
+    <span class="brand-item">INTEL</span>
+    <span class="brand-item">CORSAIR</span>
+    <span class="brand-item">SAMSUNG</span>
+    <span class="brand-item">ASUS ROG</span>
+    <span class="brand-item">MSI</span>
+    <span class="brand-item">STEELSERIES</span>
+    <span class="brand-item">HyperX</span>
+    <span class="brand-item">SONY</span>
+    <span class="brand-item">MICROSOFT</span>
+    <span class="brand-item">DXRacer</span>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h2>FIQUE POR DENTRO DAS OFERTAS</h2>
+  <p>Assine e receba alertas de promoções exclusivas, lançamentos e drops especiais.</p>
+  <div class="newsletter-form">
+    <input class="newsletter-input" type="email" placeholder="seu@email.com">
+    <button class="newsletter-btn" onclick="subscribeNews(this)">ASSINAR</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="logo" href="#">
+        <div class="logo-icon">⬡</div>
+        NEXUS<span>GEAR</span>
+      </a>
+      <p class="footer-desc">A maior loja de games e eletrônicos do Brasil. Periféricos, PCs, consoles e tudo que você precisa para dominar.</p>
+      <div class="footer-social">
+        <a class="social-btn" href="#">📘</a>
+        <a class="social-btn" href="#">📸</a>
+        <a class="social-btn" href="#">🐦</a>
+        <a class="social-btn" href="#">▶️</a>
+        <a class="social-btn" href="#">💬</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Produtos</h4>
+      <ul>
+        <li><a href="#">Periféricos</a></li>
+        <li><a href="#">PCs Gamer</a></li>
+        <li><a href="#">Consoles</a></li>
+        <li><a href="#">Monitores</a></li>
+        <li><a href="#">Cadeiras Gamer</a></li>
+        <li><a href="#">Headsets</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Atendimento</h4>
+      <ul>
+        <li><a href="#">Central de Ajuda</a></li>
+        <li><a href="#">Rastrear Pedido</a></li>
+        <li><a href="#">Trocas e Devoluções</a></li>
+        <li><a href="#">Garantia</a></li>
+        <li><a href="#">Fale Conosco</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>A Nexus</h4>
+      <ul>
+        <li><a href="#">Sobre Nós</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Afiliados</a></li>
+        <li><a href="#">Política de Privacidade</a></li>
+        <li><a href="#">Termos de Uso</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 NEXUSGEAR — Todos os direitos reservados. CNPJ: 00.000.000/0001-00</span>
+    <div class="footer-pay">
+      <span class="pay-badge">PIX</span>
+      <span class="pay-badge">VISA</span>
+      <span class="pay-badge">MASTER</span>
+      <span class="pay-badge">BOLETO</span>
+      <span class="pay-badge">12×</span>
+    </div>
+  </div>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <span class="cart-title">CARRINHO</span>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <div class="cart-empty-icon">🛒</div>
+      <div>Seu carrinho está vazio</div>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-summary">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total" id="cartTotal">R$ 0,00</span>
+    </div>
+    <button class="checkout-btn">FINALIZAR COMPRA</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const allProducts = [
+  {id:'kb1',name:'Teclado Mecânico RGB K95',brand:'CORSAIR',cat:'perifericos',emoji:'⌨️',price:649,original:899,rating:4.9,reviews:2341,specs:['Cherry MX','RGB','USB'],badge:'hot'},
+  {id:'ms1',name:'Mouse Pro 25K DPI',brand:'RAZER',cat:'perifericos',emoji:'🖱️',price:389,original:499,rating:4.8,reviews:1823,specs:['25K DPI','6 botões','RGB'],badge:'new'},
+  {id:'hs1',name:'Headset 7.1 Surround',brand:'HyperX',cat:'perifericos',emoji:'🎧',price:299,original:449,rating:4.7,reviews:987,specs:['7.1','USB','RGB'],badge:'sale'},
+  {id:'mp1',name:'Mousepad XXL RGB',brand:'STEELSERIES',cat:'perifericos',emoji:'🟦',price:149,original:199,rating:4.6,reviews:3210,specs:['900×400mm','RGB','antiderrapante']},
+  {id:'gp1',name:'Controle DualSense Edge',brand:'SONY',cat:'perifericos',emoji:'🎮',price:849,original:1099,rating:4.9,reviews:4512,specs:['Haptic','BT 5.1','USB-C'],badge:'hot'},
+  {id:'ws1',name:'Webcam 4K StreamPro',brand:'LOGITECH',cat:'perifericos',emoji:'📷',price:599,original:799,rating:4.7,reviews:766,specs:['4K 60fps','AF','HDR'],badge:'new'},
+  {id:'pc1',name:'PC Gamer RTX 4070 i7',brand:'ASUS ROG',cat:'pc',emoji:'🖥️',price:6499,original:7999,rating:4.9,reviews:312,specs:['i7-13700K','32GB','RTX 4070'],badge:'hot'},
+  {id:'pc2',name:'PC Gamer Entry RX 7600',brand:'ACER',cat:'pc',emoji:'💻',price:3499,original:4299,rating:4.7,reviews:218,specs:['i5-13400','16GB','RX 7600']},
+  {id:'rtx4090',name:'Placa de Vídeo RTX 4090',brand:'NVIDIA',cat:'pc',emoji:'⚡',price:9899,original:12999,rating:5.0,reviews:891,specs:['24GB GDDR6X','PCIe 4.0','DLSS 3'],badge:'hot'},
+  {id:'pc4',name:'PC Gamer RTX 4060 Ryzen',brand:'MSI',cat:'pc',emoji:'🖥️',price:4299,original:5499,rating:4.8,reviews:445,specs:['Ryzen 7 7700','32GB','RTX 4060']},
+  {id:'ps5',name:'PlayStation 5 Slim',brand:'SONY',cat:'consoles',emoji:'🕹️',price:3799,original:4499,rating:4.9,reviews:8723,specs:['4K','120fps','SSD 1TB'],badge:'hot'},
+  {id:'xbx',name:'Xbox Series X 1TB',brand:'MICROSOFT',cat:'consoles',emoji:'🟩',price:3499,original:4299,rating:4.8,reviews:4211,specs:['4K 120fps','1TB','GamePass'],badge:'sale'},
+  {id:'sw2',name:'Nintendo Switch 2',brand:'NINTENDO',cat:'consoles',emoji:'🎴',price:2799,original:3299,rating:4.9,reviews:6023,specs:['4K Dock','Joy-Con 2','HDR'],badge:'new'},
+  {id:'mon1',name:'Monitor 4K 144Hz 32"',brand:'SAMSUNG',cat:'monitores',emoji:'🔲',price:2999,original:3999,rating:4.9,reviews:1823,specs:['4K','144Hz','IPS','HDR'],badge:'hot'},
+  {id:'mon2',name:'Monitor Curvo 34" WQHD',brand:'LG',cat:'monitores',emoji:'🖥️',price:1899,original:2499,rating:4.7,reviews:934,specs:['3440×1440','165Hz','VA'],badge:'sale'},
+  {id:'mon3',name:'Monitor 27" 240Hz 1ms',brand:'ASUS ROG',cat:'monitores',emoji:'⚡',price:1599,original:1999,rating:4.8,reviews:2100,specs:['1080p','240Hz','IPS'],badge:'new'},
+  {id:'ch1',name:'Cadeira Gamer X-Pro RGB',brand:'DXRacer',cat:'cadeiras',emoji:'🪑',price:1299,original:1799,rating:4.6,reviews:2314,specs:['RGB','Reclinável 180°','Couro PU'],badge:'sale'},
+  {id:'ch2',name:'Cadeira Premium Series V',brand:'SecretLab',cat:'cadeiras',emoji:'🪑',price:2199,original:2699,rating:4.9,reviews:1087,specs:['Aço','Memória','Coldfoam'],badge:'hot'},
+  {id:'ram1',name:'Memória RAM 32GB DDR5',brand:'CORSAIR',cat:'pc',emoji:'💾',price:699,original:899,rating:4.8,reviews:445,specs:['32GB','DDR5 6000','RGB']},
+  {id:'ssd1',name:'SSD NVMe 2TB Gen 4',brand:'SAMSUNG',cat:'pc',emoji:'💿',price:549,original:699,rating:4.9,reviews:3211,specs:['2TB','7400MB/s','PCIe 4.0'],badge:'off'},
+];
+
+let cart = [];
+let currentFilter = 'todos';
+let currentSearch = '';
+let currentSort = 'default';
+let displayCount = 12;
+
+function getFiltered(){
+  let p = [...allProducts];
+  if(currentFilter !== 'todos') p = p.filter(x => x.cat === currentFilter);
+  if(currentSearch.trim()) p = p.filter(x => x.name.toLowerCase().includes(currentSearch.toLowerCase()) || x.brand.toLowerCase().includes(currentSearch.toLowerCase()));
+  if(currentSort === 'priceAsc') p.sort((a,b) => a.price - b.price);
+  else if(currentSort === 'priceDesc') p.sort((a,b) => b.price - a.price);
+  else if(currentSort === 'rating') p.sort((a,b) => b.rating - a.rating);
+  else if(currentSort === 'name') p.sort((a,b) => a.name.localeCompare(b.name));
+  return p;
+}
+
+function renderProducts(){
+  const grid = document.getElementById('productsGrid');
+  const filtered = getFiltered();
+  const visible = filtered.slice(0, displayCount);
+  document.getElementById('filterCount').textContent = `Exibindo ${visible.length} de ${filtered.length} produtos`;
+  document.getElementById('loadMoreBtn').style.display = filtered.length > displayCount ? 'inline-block' : 'none';
+  
+  if(!visible.length){
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:4rem 0;"><div style="font-size:3rem;margin-bottom:1rem;">🔍</div><div>Nenhum produto encontrado</div></div>';
+    return;
+  }
+  
+  grid.innerHTML = visible.map(p => {
+    const inCart = cart.find(c => c.id === p.id);
+    const badgeHtml = p.badge ? `<div class="product-badge badge-${p.badge}">${{new:'NOVO',hot:'🔥 HOT',sale:'SALE',off:'OFERTA'}[p.badge]||p.badge}</div>` : '';
+    return `<div class="product-card" data-id="${p.id}">
+      ${badgeHtml}
+      <div class="product-img">
+        <div class="product-img-overlay"></div>
+        ${p.emoji}
+        <div class="product-actions">
+          <button class="action-btn" title="Favoritar" onclick="event.stopPropagation();showToast('❤️ Adicionado aos favoritos!')">♡</button>
+          <button class="action-btn" title="Compartilhar" onclick="event.stopPropagation();showToast('🔗 Link copiado!')">⎘</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">${p.brand}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-specs">${p.specs.map(s=>`<span class="spec-tag">${s}</span>`).join('')}</div>
+        <div class="product-rating">
+          <span class="stars">${'★'.repeat(Math.floor(p.rating))}${p.rating%1?'½':''}</span>
+          <span class="rating-count">(${p.reviews.toLocaleString('pt-BR')})</span>
+        </div>
+        <div class="product-pricing">
+          <div class="price-block">
+            ${p.original > p.price ? `<div class="price-original">R$ ${p.original.toLocaleString('pt-BR')}</div>` : ''}
+            <div class="price-current">R$ ${p.price.toLocaleString('pt-BR')}</div>
+          </div>
+          <button class="add-cart-btn${inCart?' added':''}" onclick="addToCart('${p.id}',this)">${inCart?'✓ NO CARRINHO':'+ COMPRAR'}</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterCat(cat){
+  currentFilter = cat;
+  displayCount = 12;
+  document.querySelectorAll('.cat-card').forEach((c,i) => {
+    const cats = ['todos','perifericos','pc','consoles','monitores','cadeiras'];
+    c.classList.toggle('active', cats[i] === cat);
+  });
+  const titles = {todos:'TODOS OS PRODUTOS',perifericos:'PERIFÉRICOS',pc:'PCs & COMPONENTES',consoles:'CONSOLES',monitores:'MONITORES',cadeiras:'CADEIRAS GAMER'};
+  document.getElementById('currentCatTitle').textContent = titles[cat]||cat.toUpperCase();
+  renderProducts();
+}
+
+function searchProducts(v){
+  currentSearch = v;
+  displayCount = 12;
+  renderProducts();
+}
+
+function sortProducts(v){
+  currentSort = v;
+  renderProducts();
+}
+
+function loadMore(){
+  displayCount += 8;
+  renderProducts();
+}
+
+function addToCart(id, btn){
+  const p = allProducts.find(x => x.id === id);
+  if(!p) return;
+  const existing = cart.find(c => c.id === id);
+  if(existing){existing.qty++;}
+  else{cart.push({...p, qty:1});}
+  updateCartUI();
+  if(btn){btn.textContent='✓ NO CARRINHO';btn.classList.add('added');}
+  showToast(`🛒 ${p.name} adicionado!`);
+}
+
+function addToCartById(id){addToCart(id, null);}
+
+function updateCartUI(){
+  const total = cart.reduce((s,c) => s + c.price * c.qty, 0);
+  const count = cart.reduce((s,c) => s + c.qty, 0);
+  document.getElementById('cartCount').textContent = count;
+  document.getElementById('cartTotal').textContent = 'R$ ' + total.toLocaleString('pt-BR', {minimumFractionDigits:2});
+  
+  const cartItems = document.getElementById('cartItems');
+  const cartFooter = document.getElementById('cartFooter');
+  
+  if(!cart.length){
+    cartItems.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🛒</div><div>Seu carrinho está vazio</div></div>';
+    cartFooter.style.display = 'none';
+    return;
+  }
+  
+  cartFooter.style.display = 'block';
+  cartItems.innerHTML = cart.map(c => `
+    <div class="cart-item">
+      <div class="cart-item-img">${c.emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${c.name}</div>
+        <div class="cart-item-price">R$ ${(c.price * c.qty).toLocaleString('pt-BR')}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <div class="cart-item-qty">
+          <button class="qty-btn" onclick="changeQty('${c.id}',-1)">−</button>
+          <span class="qty-num">${c.qty}</span>
+          <button class="qty-btn" onclick="changeQty('${c.id}',1)">+</button>
+        </div>
+        <button class="remove-item" onclick="removeItem('${c.id}')">🗑</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function changeQty(id, delta){
+  const item = cart.find(c => c.id === id);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty <= 0) cart = cart.filter(c => c.id !== id);
+  updateCartUI();
+}
+
+function removeItem(id){
+  cart = cart.filter(c => c.id !== id);
+  updateCartUI();
+  renderProducts();
+}
+
+function toggleCart(){
+  document.getElementById('cartSidebar').classList.toggle('open');
+  document.getElementById('cartOverlay').classList.toggle('open');
+}
+
+let toastTimer;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function subscribeNews(btn){
+  btn.textContent = '✓ INSCRITO!';
+  btn.style.background = 'var(--green)';
+  showToast('🎮 Você entrou para o time NEXUSGEAR!');
+}
+
+renderProducts();
+</script>
+</body>
+</html>
